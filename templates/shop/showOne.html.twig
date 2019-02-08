@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} fiche produit {% endblock %}
+
+{% block body %}
+<div style="margin-top:50px">
+    <div class="row">
+        <div class="col-lg">
+        <img src="{{ product.image }}" class="ficheProduit" alt="">
+        </div>
+        <div class="col-lg" style="margin-top:50px; position: relative; overflow: visible">
+        <h2> {{ product.name }}</h2> 
+        <hr>
+        <h5>Description</h5>
+        <p>{{ product.description | raw }}</p>
+        <h5>{{ product.prix}} EUR </h5>
+        <form action="{{ path('ajouterPanier', { 'id' : product.id }) }}" method="get">
+        <div>
+        <select name="size_index" class="span1" >
+            <option value="s">S</option>
+            <option value="m"selected>M</option>
+            <option value="l">L</option>
+            <option value="xl">XL</option>
+        </select>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Ajouter au pannier</button>
+        </form>
+        <hr>
+        <h5>Composition et Entretien</h5>
+        <p>{{ product.compoEntretien }}</p>
+
+        </div>
+
+{% endblock %}
+{% block footer %}{% endblock %}

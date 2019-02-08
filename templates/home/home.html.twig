@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomePage{% endblock %}
+
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand animated bounceInUp" href="{{ path('home') }}" style="font-size:52px; padding-left:30px">B G S</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor03">
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+                <a class="nav-link animated fadeIn " href="{{ path('shop') }}">SHOP</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link animated fadeIn " href="{{ path('ourStory') }}">OUR STORY</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link animated fadeIn" href="{{ path('about') }}">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link animated fadeIn" href="{{ path('contact') }}">Contact</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+    <span style="font-size:25px">
+    <ul class="navbar-nav mx-auto">
+    <div>
+    <li class="nav-item">
+        </form>
+        </li>
+    </div>
+    {% if app.user %}
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding-left:28px; padding-right:28px">
+                My account !
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{{ path('profile') }}">Profile</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="dropdown-item" href="{{ path('user_index') }}">Admin User</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path('product_index') }}">Admin Product</a>
+                    <a class="dropdown-item" href="{{ path('product_new') }}">Add New Products</a>
+                {% endif %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
+                {# <a class="dropdown-item" href="{{ path('user_unsubscribe') }}">Unsubscribe</a> #}
+            </div>
+        </div>
+    {% else %}
+        <li class="nav-item">
+            <a href="{{ path('app_login') }}">
+                <i class="fas fa-user-circle"></i>
+            </a>
+        </li>
+    {% endif %}
+    <li class="nav-item">
+        <a href="{{ path('showPanier') }}" style="margin-left:20px"">
+        <i class="fas fa-cart-arrow-down">
+            {% if app.session.get('qte_items')[0]  is defined and app.session.get('qte_items')[0]  > 0  %}
+                {{ app.session.get('qte_items')[0] }}
+            {% endif %}
+        </i>
+        </a>
+    </li>
+    </ul>
+    </span>
+    </form>
+    </div>
+</nav>
+<div class="container">
+
+    {% for label, messages in app.flashes %}
+        <div class="container">
+            <div class="alert alert-{{ label }}">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+    {% endblock %}
+{% block body %}
+
+
+<img src="/img/HomepageBGS.png" alt="" class="imgHome">
+{% endblock %}

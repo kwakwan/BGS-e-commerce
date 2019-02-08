@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ShopController!{% endblock %}
+
+{% block body %}
+
+<div style="margin-top:30px">
+<div class="row">
+
+    <div class="col-3">
+      <h3>Categories</h3>
+      <br>
+  
+      <nav class="nav nav-pills flex-column">
+      <li class="nav-item">
+        <a class="nav-link button" href="{{ path('shop')}}">VIEW ALL</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link button" href="{{ path('show_category', {'category_id': 1}) }}">JACKETS</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link button" href="{{ path('show_category', {'category_id': 2}) }}">PANTS</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link button" href="{{ path('show_category', {'category_id': 3}) }}">BAGS</a>
+      </li>
+      </nav>
+    </div>
+
+  <div class="col-9">
+  <div class="row">
+    {# mettre boucle for pour générer les produits #}
+    {% for product in productByCategory %}
+  {# {{product.id}} #}
+      <div class="d-flex flex-row-reverse"> 
+          <section class="products">
+          <products>
+          <div class="col-9">
+              <div class="content col-4">
+                  <a href="{{ path('show_one', {'id': product.id}) }}">
+                  <img src="{{ product.image }}" class="produit" alt="">
+                  </a>
+                      <p id="description">{{ product.name }}</p>
+                      <p style="width:200px">{{ product.prix }} EUR</p><br>
+              </div>
+              </div>
+          </products>
+          </section>
+      </div>
+  
+    
+{% endfor %}
+    </div>
+    </div>
+
+</div>
+
+{% endblock %}
+{% block footer %}{% endblock %}

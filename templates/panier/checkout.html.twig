@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PanierController!{% endblock %}
+
+{% block body %}
+    {% set total = 0%}
+    <div class="container">
+         <div  class="nav-space-checkout" style="padding-top: 40px">
+            <div class="container">
+                <div class="row" style="margin-bottom:20px">
+                    <div>
+                        <h1 class="checkout-header" style="margin-bottom:35px">Checkout</h1>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th class="col-xs-4 active">Product</th>
+                                <th class="col-xs-4 active">Size</th>
+                                <th class="col-xs-3 active text-center">Quantité</th>
+                                <th class="col-xs-3 active text-center">Unit Price</th>
+                                <th class="col-xs-3 active text-center">Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for product in products %}
+                                {% for key, prod in panier[product.id] %}
+                                    <tr>
+                                        <th class="col-xs-4 checkout-product-name">{{ product.name }}</th>
+                                        <td class="col-xs-3">{{ key | upper}}</td>
+                                        <td class="col-xs-3 active text-center">{{   panier[product.id][key] }}</td>
+                                        <td class="col-xs-3">${{ product.prix }}</td>
+                                        <td class="col-xs-3">${{ product.prix *  panier[product.id][key] }}</td>
+                                        {% set total = total + (product.prix *  panier[product.id][key]) %}
+                                    </tr> 
+                                {% endfor %}
+                            {% endfor %}
+                                    
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th class="col-xs-6 info">Total</th>
+                                <td></td>
+                                <td class="col-xs-3 text-center">{{ app.session.get('qte_items')  }}</td>
+                                <td></td>
+                                <td class="col-xs-3 info checkout-total">${{ total }}</td>
+                            </tr>
+                                
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <form action="" id="centerForm" method="POST">
+                    <script
+                            src="https://checkout.stripe.com/checkout.js" class="btn stripe-button"
+                            data-key="pk_test_HxZzNHy8LImKK9LDtgMDRBwd"
+                            data-amount="{{ total * 100 }}"
+                            data-name="Spunsky KILL"
+                            data-description="Widget"
+                            data-image="{{ asset('images/logo.png') }}"
+                            data-zip-code="true"
+                            data-locale="auto">
+                    </script>
+                </form>
+            </div>
+            {% if products|length != 0 %}
+
+            {% endif %}
+        </div>
+        <a href="{{ path('showPanier')}}" class="btn btn-dark btn-sm" style="margin-left:49px">Shopping Cart</a>
+    </div>
+{% endblock %}
+{% block footer %}{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PanierController!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <a href="showPanier">Panier:{{ qte_items }}</a>
+    <ul>
+        {% for product in products %}
+            <div class="row">
+                <li>
+                    Nom:  {{ product.name|e }}
+                    Prix: {{product.prix }} 
+                    <a class=" btn btn-primary btn-sm" href="{{ path('ajouterPanier', { 'id' : product.id }) }}"  role="button">Ajoute à pannier</a>
+                </li>
+            </div>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

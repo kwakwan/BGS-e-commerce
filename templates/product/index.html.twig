@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product index{% endblock %}
+
+{% block body %}
+    <h1 style="padding-top: 40px">Product index</h1>
+    <div style="margin-top:20px; margin-bottom:20px">
+    <a href="{{ path('product_new') }}">
+    <button class="btn btn-dark" style="padding-left:106px; padding-right:106px">Create New</button>
+    </a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>CompoEntretien</th>
+                <th>Prix</th>
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description | raw }}</td>
+                <td>{{ product.compoEntretien }}</td>
+                <td>{{ product.prix }}</td>
+                <td><img src="{{ product.image }}" class="produitIMG"></td>
+                <td>
+                    <a href="{{ path('product_show', {'id': product.id}) }}">Show</a>
+                    <a href="{{ path('product_edit', {'id': product.id}) }}">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}
+{% block footer %}{% endblock %}
